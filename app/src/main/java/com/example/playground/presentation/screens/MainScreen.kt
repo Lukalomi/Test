@@ -32,6 +32,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.playground.R
 import com.example.playground.core.ResponseStatus
+import com.example.playground.core.extensions.toCustomDateFormat
 import com.example.playground.presentation.viewmodels.MainScreenViewModel
 
 @Composable
@@ -72,11 +73,11 @@ fun ObserveData(
             if (isCardExpanded.value) {
                 colorsData.forEach {
                     SingleItemCard(
-                        badge = it.imageUrl,
+                        badge = it.badgeUrl,
                         title = it.title,
                         author = it.userName,
                         rgbName = it.rgb.toString(),
-                        dateCreated = it.dateCreated,
+                        dateCreated = it.dateCreated.toCustomDateFormat(),
                         rank = it.rank.toString(),
                         isCardExpanded = isCardExpanded
                     )
