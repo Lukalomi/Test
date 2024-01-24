@@ -1,5 +1,8 @@
 package com.example.playground.core.extensions
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -13,4 +16,16 @@ fun String.toCustomDateFormat(): String {
         e.printStackTrace()
         this
     }
+}
+
+fun Modifier.paddingValues(
+): Modifier {
+    return this.then(
+        Modifier.padding(
+            top = 10.dp,
+            start = 4.dp,
+            end = 4.dp,
+            bottom = 0.dp
+        )
+    )
 }

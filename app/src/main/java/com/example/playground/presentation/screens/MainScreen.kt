@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,20 +23,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.playground.R
 import com.example.playground.core.ResponseStatus
+import com.example.playground.core.extensions.paddingValues
 import com.example.playground.core.extensions.toCustomDateFormat
 import com.example.playground.presentation.viewmodels.MainScreenViewModel
 
 @Composable
-fun MainScreen(mainScreenViewModel: MainScreenViewModel) {
+fun MainScreen() {
+    val mainScreenViewModel: MainScreenViewModel = viewModel()
 
     val isCardExpanded = remember {
         mutableStateOf(false)
@@ -48,7 +50,7 @@ fun MainScreen(mainScreenViewModel: MainScreenViewModel) {
 
     MaterialTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.error
+            modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
         ) {
             ObserveData(
                 mainScreenViewModel = mainScreenViewModel,
@@ -123,8 +125,9 @@ fun SingleItemCard(
 ) {
     Column(
         modifier = Modifier
-            .width(300.dp)
-            .height(300.dp)
+            .width(if (isCardExpanded.value) 600.dp else 300.dp)
+            .height(if (isCardExpanded.value) 700.dp else 400.dp)
+            .padding(horizontal = 16.dp, vertical = 16.dp)
             .clickable {
                 isCardExpanded.value = !isCardExpanded.value
             },
@@ -137,14 +140,43 @@ fun SingleItemCard(
             contentDescription = "Logo",
             placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
             error = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.clip(CircleShape)
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .width(200.dp)
+                .height(200.dp)
         )
+
         title?.let {
-            Text(it)
+            Text(
+                text = it,
+                modifier = Modifier.paddingValues()
+            )
         }
         author?.let {
-            Text(it)
+            Text(
+                text = it,
+                modifier = Modifier.paddingValues()
+            )
+        }
+
+        dateCreated?.let {
+            Text(
+                text = it,
+                modifier = Modifier.paddingValues()
+            )
+        }
+
+        rgbName?.let {
+            Text(
+                text = it,
+                modifier = Modifier.paddingValues()
+            )
+        }
+        rank?.let {
+            Text(
+                text = it,
+                modifier = Modifier.paddingValues()
+            )
         }
     }
 }
